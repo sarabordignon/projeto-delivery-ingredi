@@ -1,0 +1,2 @@
+def comprovante():
+    return

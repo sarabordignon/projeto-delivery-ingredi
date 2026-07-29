@@ -1,0 +1,2 @@
+def desconto():
+    return
