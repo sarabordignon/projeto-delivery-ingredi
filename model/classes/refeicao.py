@@ -1,16 +1,12 @@
-class Refeicao:
-    def __init__(self, quantidade):
-        self.quantidade = quantidade
+from sqlalchemy import Column, Integer, String
+from database import Base
 
-    def alterar_quantidade(self, nova_quantidade):
-        self.quantidade = nova_quantidade
-        print("nova quantidade adicionada!")
-    
+class Refeicao(Base):
+    __tablename__ = "Refeicao"
 
-refeicao1 = Refeicao("1")
-print(refeicao1.quantidade)
+    codigo_barra = Column(String(50), primary_key=True, index=True)
+    codigo_receita = Column(Integer, primary_key=True, index=True)
+    quantidade = Column(Integer, nullable=False)
 
-refeicao1.alterar_quantidade("27")
-print(refeicao1.quantidade)
 
 

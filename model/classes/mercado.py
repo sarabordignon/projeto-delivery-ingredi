@@ -1,16 +1,10 @@
-class Mercado:
-    def __init__(self, cnpj, nome, endereco, contato):
-        self.cnpj = cnpj
-        self.nome = nome
-        self.endereco= endereco
-        self.contato = contato
+from sqlalchemy import Column, Integer, String
+from database import Base
 
-    def alterar_contato(self, novo_contato):
-        self.contato = novo_contato
-        print("novo contato adicionado!")
+class Mercado(Base):
+    __tablename__ = "Mercado"
 
-mercado1 = Mercado("1321412", "mercado do carlos", "Rua 43", "491294122332")
-print(mercado1.nome)
-
-mercado1.alterar_contato(3456)
-print(mercado1.contato)
+    cnpj = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    endereco = Column(String(200), nullable=False)
+    contato = Column(Integer, nullable=False)

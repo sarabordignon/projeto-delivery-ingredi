@@ -1,17 +1,12 @@
-class Produto:
-    def __init__(self, codigo_barra, nome, unidade_medida, preco_unidade, categoria):
-        self.codigo_barra = codigo_barra
-        self.nome = nome
-        self.unidade_medida = unidade_medida
-        self.preco_unidade = preco_unidade
-        self.categoria= categoria
+from sqlalchemy import Column, String, Numeric
+from database import Base
 
-    def alterar_preco(self, novo_preco):
-        self.preco_unidade = novo_preco
-        print("preço alterado!")
+class Produto(Base):
+    __tablename__ = "Produto"
 
-produto1 = Produto("1312421", "farinha", "kg", "23R$", "doce")
-print(produto1.nome)
-
-produto1.alterar_preco("15,90R$")
-print(produto1.preco_unidade)
+    codigo_barra = Column(String(20), primary_key=True)
+    nome = Column(String(100), nullable=False)
+    und_medida = Column(String(10), nullable=False)
+    preco_und = Column(Numeric(10, 2), nullable=False)
+    categoria = Column(String(50), nullable=False)
+    cnpj = Column(String(18), nullable=False)

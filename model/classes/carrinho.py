@@ -1,16 +1,11 @@
-class Carrinho:
-    def __init__(self, codigo_carrinho, data_criacao, status):
-        self.codigo_carrinho = codigo_carrinho
-        self.data_criacao = data_criacao
-        self.status = status
-        self.quantidade = 0
+from sqlalchemy import Column, Integer, String
+from database import Base
 
-    def adicionar(self, adicionar):
-        self.quantidade += adicionar
-        print("adicionou item ao carrinho!")
+class Carrinho(Base):
+    __tablename__ = "Carrinho"
 
-carrinho1 = Carrinho("1", "29-04-2026", "vazio")
-print(carrinho1.status)
+    codigo_carrinho = Column(Integer, primary_key=True, index=True)
+    data_criacao = Column(String(50), nullable=False)
+    status = Column(String(50), nullable=False)
+    cpf = Column(Integer, nullable=False)
 
-carrinho1.adicionar(2)
-print(carrinho1.quantidade)

@@ -1,26 +1,16 @@
-class Usuario:
-    def __init__(self,cpf, nome, email, telefone, endereco, senha):
-        self.cpf = cpf
-        self.nome = nome
-        self.email = email
-        self.telefone = telefone
-        self.endereco = endereco
-        self.senha = senha
+from sqlalchemy import Column, Integer, String
+from database import Base
 
-    def alterar_senha(self, nova_senha):
-        self.senha = nova_senha
-        print("senha alterada!")
+class Usuario(Base):
+    __tablename__ = "Usuario"
 
-    def exibir_dados(self):
-        print(self.nome, self.email)
+    cpf = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    email = Column(String(100), nullable=False)
+    telefone = Column(String(20), nullable=False)
+    endereco = Column(String(200), nullable=False)
+    senha = Column(String(100), nullable=False)
 
-usuario1 = Usuario("213142112", "carlos", "carlos@gmail.com", "2313122321421", "Rua 3", "carlos123")
-
-usuario1.alterar_senha(1234)
-print(usuario1.senha)
-
-usuario1.exibir_dados()
-print(usuario1.telefone)
 
 
 
