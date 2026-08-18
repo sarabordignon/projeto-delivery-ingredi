@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados tabela</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Usuário</h1>
+
+    <table id="tabela-usuario">
+        <thead>
+            <tr>
+                <th>cpf</th>
+                <th>nome</th>
+                <th>email</th>
+                <th>telefone</th>
+                <th>endereco</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+    </table>
+
+
+    <h1>Carrinho</h1>
+
+    <table id="tabela-carrinho">
+        <thead>
+            <tr>
+                <th>codigo_carrinho</th>
+                <th>data_criacao</th>
+                <th>status</th>
+                <th>cpf</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+    </table>
+
+
+    <script>
+
+        const API_URL = "http://127.0.0.1:8000";
+
+        async function carregarUsuario() {
+
+            const resposta = await fetch(`${API_URL}/usuario`);
+
+            const usuarios = await resposta.json();
+
+            console.log("Usuários:", usuarios);
+
+            const corpo = document.querySelector("#tabela-usuario tbody");
+
+            corpo.innerHTML = "";
+
+            for (let i = 0; i < usuarios.length; i++) {
+
+                const usuario = usuarios[i];
+
+                corpo.insertAdjacentHTML("beforeend", `
+                    <tr>
+                        <td>${usuario.cpf}</td>
+                        <td>${usuario.nome}</td>
+                        <td>${usuario.email}</td>
+                        <td>${usuario.telefone}</td>
+                        <td>${usuario.endereco}</td>
+                    </tr>
+                `);
+            }
+        }
+
+
+        async function carregarCarrinho() {
+
+            const resposta = await fetch(`${API_URL}/carrinho`);
+
+            const carrinhos = await resposta.json();
+
+            console.log("Carrinhos:", carrinhos);
+
+            const corpo = document.querySelector("#tabela-carrinho tbody");
+
+            corpo.innerHTML = "";
+
+            for (let i = 0; i < carrinhos.length; i++) {
+
+                const carrinho = carrinhos[i];
+
+                corpo.insertAdjacentHTML("beforeend", `
+                    <tr>
+                        <td>${carrinho.codigo_carrinho}</td>
+                        <td>${carrinho.data_criacao}</td>
+                        <td>${carrinho.status}</td>
+                        <td>${carrinho.cpf}</td>
+                    </tr>
+                `);
+            }
+        }
+
+
+        carregarUsuario();
+        carregarCarrinho();
+
+    </script>
+
+</body>
+</html>

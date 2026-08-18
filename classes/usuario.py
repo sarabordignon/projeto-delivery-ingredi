@@ -12,5 +12,3 @@ class Usuario(Base):
     senha = Column(String(100), nullable=False)
 
 
-
-
