@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head> <meta charset="UTF-8"> <title>Cadastro de Usuario</title> </head>
+
+<body>
+
+<div class="container">
+
+<h1>Cadastro de Usuario</h1>
+
+<input id="cpf" type="text" placeholder="Cpf"> <input id="nome" type="text" placeholder="Nome"> <input id="email" type="text" placeholder="Email"> <input id="telefone" type="text" placeholder="Telefone"> <input id="endereco" type="text" placeholder="Endereco"> <input id="senha" type="password" placeholder="Senha">
+
+<button onclick="salvarUsuario()">Salvar</button>
+
+</div>
+
+<script> const API_URL = "http://127.0.0.1:8000"; async function salvarUsuario() { const cpf = document.getElementById("cpf").value; const nome = document.getElementById("nome").value; const email = document.getElementById("email").value; const telefone = document.getElementById("telefone").value; const endereco = document.getElementById("endereco").value; const senha = document.getElementById("senha").value; const dados = { cpf: cpf, nome: nome, email: email, telefone: telefone, endereco: endereco, senha: senha }; await fetch(API_URL + "/usuario", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(dados) }); alert("Usuario salvo!"); } </script>
+
+</body>
+
+</html>
+
+<!-- Mercado -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Mercado</title>
+</head>
+
+<body>
+
+<div class="container">
+
+
+<h1>Cadastro de Mercado</h1>
+
+<input id="cnpj" type="text" placeholder="Cnpj">
+<input id="nomeMercado" type="text" placeholder="Nome">
+<input id="enderecoMercado" type="text" placeholder="Endereço">
+<input id="contato" type="text" placeholder="Contato">
+
+<button onclick="salvarMercado()">Salvar</button>
+
+
+</div>
+
+<script>
+
+async function salvarMercado() {
+
+    const cnpj = document.getElementById("cnpj").value;
+    const nome = document.getElementById("nome").value;
+    const endereco = document.getElementById("endereco").value;
+    const contato = document.getElementById("contato").value;
+
+    const dados = {
+        cnpj: cnpj,
+        nome: nome,
+        endereco: endereco,
+        contato: contato
+    };
+
+    await fetch(API_URL + "/mercado", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(dados)
+
+    });
+
+    alert("Mercado salvo!");
+
+}
+
+</script>
+
+</body>
+
+</html>
+
+<!-- Isso é um carrinho -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Carrinho</title>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Cadastro de Carrinho</h1>
+
+<input id="codigo_carrinho" type="text" placeholder="Codigo_carrinho">
+<input id="data_criacao" type="text" placeholder="Data_criacao">
+<input id="status" type="text" placeholder="Status">
+<input id="cpfCarrinho" type="text" placeholder="Cpf">
+
+<button onclick="salvarCarrinho()">Salvar</button>
+
+
+</div>
+
+<script>
+
+async function salvarCarrinho() {
+
+    const codigo_carrinho = document.getElementById("codigo_carrinho").value;
+    const data_criacao = document.getElementById("data_criacao").value;
+    const status = document.getElementById("status").value;
+    const cpf = document.getElementById("cpfCarrinho").value;
+
+    const dados = {
+        codigo_carrinho: codigo_carrinho,
+        data_criacao: data_criacao,
+        status: status,
+        cpf: cpf
+    };
+
+    await fetch(API_URL + "/carrinho", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(dados)
+
+    });
+
+    alert("Carrinho salvo!");
+
+}
+
+</script>
+
+</body>
+
+</html>
+
+<!-- Isso é um produto -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Produto</title>
+</head>
+
+<body>
+
+<div class="container">
+
+
+<h1>Cadastro de Produto</h1>
+
+<input id="codigo_barra" type="text" placeholder="Codigo_barra">
+<input id="nomeProduto" type="text" placeholder="Nome">
+<input id="und_medida" type="text" placeholder="Und_medida">
+<input id="preco_und" type="text" placeholder="Preco_und">
+<input id="categoria" type="text" placeholder="Categoria">
+<input id="cnpjProduto" type="text" placeholder="Cnpj">
+
+<button onclick="salvarProduto()">Salvar</button>
+
+
+</div>
+
+<script>
+
+async function salvarProduto() {
+
+    const codigo_barra = document.getElementById("codigo_barra").value;
+    const nome = document.getElementById("nomeProduto").value;
+    const und_medida = document.getElementById("und_medida").value;
+    const preco_und = document.getElementById("preco_und").value;
+    const categoria = document.getElementById("categoria").value;
+    const cnpj = document.getElementById("cnpjProduto").value;
+
+    const dados = {
+        codigo_barra: codigo_barra,
+        nome: nome,
+        und_medida: und_medida,
+        preco_und: preco_und,
+        categoria: categoria,
+        cnpj: cnpj
+    };
+
+    await fetch(API_URL + "/produto", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(dados)
+
+    });
+
+    alert("Produto salvo!");
+
+}
+
+</script>
+
+</body>
+
+</html>
+
+<!-- Isso é um pedido -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Pedido</title>
+</head>
+
+<body>
+
+<div class="container">
+
+
+<h1>Cadastro de Pedido</h1>
+
+<input id="numero_pedido" type="text" placeholder="Numero_pedido">
+<input id="data_pedido" type="text" placeholder="Data_pedido">
+<input id="status_pedido" type="text" placeholder="Status_pedido">
+<input id="valor_total" type="text" placeholder="Valor_total">
+<input id="endereco_entrega" type="text" placeholder="Endereco_entrega">
+<input id="status_entrega" type="text" placeholder="Status_entrega">
+<input id="data_prevista_entrega" type="text" placeholder="Data_prevista_entrega">
+<input id="data_realizada_entrega" type="text" placeholder="Data_realizada_entrega">
+<input id="cpfPedido" type="text" placeholder="Cpf">
+<input id="codigo_carrinhoPedido" type="text" placeholder="Codigo_carrinho">
+
+<button onclick="salvarPedido()">Salvar</button>
+
+</div>
+
+<script>
+
+async function salvarPedido() {
+
+    const numero_pedido = document.getElementById("numero_pedido").value;
+    const data_pedido = document.getElementById("data_pedido").value;
+    const status_pedido = document.getElementById("status_pedido").value;
+    const valor_total = document.getElementById("valor_total").value;
+    const endereco_entrega = document.getElementById("endereco_entrega").value;
+    const status_entrega = document.getElementById("status_entrega").value;
+    const data_prevista_entrega = document.getElementById("data_prevista_entrega").value;
+    const data_realizada_entrega = document.getElementById("data_realizada_entrega").value;
+    const cpf = document.getElementById("cpfPedido").value;
+    const codigo_carrinho = document.getElementById("codigo_carrinho").value;
+
+    const dados = {
+        numero_pedido: numero_pedido,
+        data_pedido: data_pedido,
+        status_pedido: status_pedido,
+        valor_total: valor_total,
+        endereco_entrega: endereco_entrega,
+        status_entrega: status_entrega,
+        data_prevista_entrega: data_prevista_entrega,
+        data_realizada_entrega: data_realizada_entrega,
+        cpf: cpf,
+        codigo_carrinho: codigo_carrinho
+    };
+
+    await fetch(API_URL + "/pedido", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(dados)
+
+    });
+
+    alert("Pedido salvo!");
+
+}
+
+</script>
+
+</body>
+
+</html>
+
+<!-- Isso é um lista produtos -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Lista Produto</title>
+</head>
+
+<body>
+
+<div class="container">
+
+
+<h1>Cadastro de Lista Produto</h1>
+
+<input id="codigo_carrinhoLista" type="text" placeholder="Codigo_carrinho">
+<input id="codigo_barraLista" type="text" placeholder="Codigo_barra">
+<input id="quantidade" type="text" placeholder="Quantidade">
+<input id="preco_unitario" type="text" placeholder="Preco_unitario">
+
+<button onclick="salvarLista()">Salvar</button>
+
+
+</div>
+
+<script>
+
+async function salvarLista() {
+
+    const codigo_carrinho = document.getElementById("codigo_carrinho").value;
+    const codigo_barra = document.getElementById("codigo_barra").value;
+    const quantidade = document.getElementById("quantidade").value;
+    const preco_unitario = document.getElementById("preco_unitario").value;
+
+    const dados = {
+        codigo_carrinho: codigo_carrinho,
+        codigo_barra: codigo_barra,
+        quantidade: quantidade,
+        preco_unitario: preco_unitario
+    };
+
+    await fetch(API_URL + "/lista", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(dados)
+
+    });
+
+    alert("Item salvo!");
+
+}
+
+</script>
+
+</body>
+
+</html>
+
+<!-- Isso é um pagamento -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Pagamento</title>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Cadastro de Pagamento</h1>
+
+<input id="id_pagamento" type="text" placeholder="Id_pagamento">
+<input id="tipo_pagamento" type="text" placeholder="Tipo_pagamento">
+<input id="valor" type="text" placeholder="Valor">
+<input id="status_pagamento" type="text" placeholder="Status_pagamento">
+<input id="data_pagamento" type="text" placeholder="Data_pagamento">
+<input id="nota_fiscal" type="text" placeholder="Nota_fiscal">
+<input id="numero_pedidoPagamento" type="text" placeholder="Numero_pedido">
+
+<button onclick="salvarPagamento()">Salvar</button>
+
+</div>
+
+<script>
+
+async function salvarPagamento() {
+
+    const id_pagamento = document.getElementById("id_pagamento").value;
+    const tipo_pagamento = document.getElementById("tipo_pagamento").value;
+    const valor = document.getElementById("valor").value;
+    const status_pagamento = document.getElementById("status_pagamento").value;
+    const data_pagamento = document.getElementById("data_pagamento").value;
+    const nota_fiscal = document.getElementById("nota_fiscal").value;
+    const numero_pedido = document.getElementById("numero_pedido").value;
+
+    const dados = {
+        id_pagamento: id_pagamento,
+        tipo_pagamento: tipo_pagamento,
+        valor: valor,
+        status_pagamento: status_pagamento,
+        data_pagamento: data_pagamento,
+        nota_fiscal: nota_fiscal,
+        numero_pedido: numero_pedido
+    };
+
+    await fetch(API_URL + "/pagamento", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(dados)
+
+    });
+
+    alert("Pagamento salvo!");
+
+}
+
+</script>
+
+</body>
+
+</html>
+
+<!-- Isso é uma receita -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Receita</title>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Cadastro de Receita</h1>
+
+<input id="codigo_receita" type="text" placeholder="Codigo_receita">
+<input id="nomeReceita" type="text" placeholder="Nome">
+<input id="modo_preparo" type="text" placeholder="Modo_preparo">
+<input id="tempo_preparo" type="text" placeholder="Tempo_preparo">
+<input id="porcoes" type="text" placeholder="Porcoes">
+
+<button onclick="salvarReceita()">Salvar</button>
+
+</div>
+
+<script>
+
+async function salvarReceita() {
+
+    const codigo_receita = document.getElementById("codigo_receita").value;
+    const nome = document.getElementById("nomeReceita").value;
+    const modo_preparo = document.getElementById("modo_preparo").value;
+    const tempo_preparo = document.getElementById("tempo_preparo").value;
+    const porcoes = document.getElementById("porcoes").value;
+
+    const dados = {
+        codigo_receita: codigo_receita,
+        nome: nome,
+        modo_preparo: modo_preparo,
+        tempo_preparo: tempo_preparo,
+        porcoes: porcoes
+    };
+
+    await fetch(API_URL + "/receita", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(dados)
+
+    });
+
+    alert("Receita salva!");
+
+}
+
+</script>
+
+</body>
+
+</html>
+
+<!-- Isso é uma refeicao -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Refeição</title>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Cadastro de Refeição</h1>
+
+<input id="codigo_receitaRefeicao" type="text" placeholder="Codigo_receita">
+<input id="codigo_barraRefeicao" type="text" placeholder="Codigo_barra">
+<input id="quantidadeRefeicao" type="text" placeholder="Quantidade">
+
+<button onclick="salvarRefeicao()">Salvar</button>
+
+</div>
+
+<script>
+
+async function salvarRefeicao() {
+
+    const codigo_receita = document.getElementById("codigo_receita").value;
+    const codigo_barra = document.getElementById("codigo_barra").value;
+    const quantidade = document.getElementById("quantidade").value;
+
+    const dados = {
+        codigo_receita: codigo_receita,
+        codigo_barra: codigo_barra,
+        quantidade: quantidade
+    };
+
+    await fetch(API_URL + "/refeicao", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(dados)
+
+    });
+
+    alert("Refeição salva!");
+
+}
+
+</script>
+
+</body>
+
+</html>

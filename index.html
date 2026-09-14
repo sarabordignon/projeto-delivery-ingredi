@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados tabela</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f0f0f0;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    
+
+<h1>Usuário</h1>
+
+<table id="tabela-usuario">
+    <thead>
+        <tr>
+            <th>cpf</th>
+            <th>nome</th>
+            <th>email</th>
+            <th>telefone</th>
+            <th>endereco</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+<h1>Carrinho</h1>
+
+<table id="tabela-carrinho">
+    <thead>
+        <tr>
+            <th>codigo_carrinho</th>
+            <th>data_criacao</th>
+            <th>status</th>
+            <th>cpf</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+<h1>Mercado</h1>
+
+<table id="tabela-mercado">
+    <thead>
+        <tr>
+            <th>cnpj</th>
+            <th>nome</th>
+            <th>endereco</th>
+            <th>contato</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+<h1>Produto</h1>
+
+<table id="tabela-produto">
+    <thead>
+        <tr>
+            <th>codigo_barra</th>
+            <th>nome</th>
+            <th>und_medida</th>
+            <th>preco_und</th>
+            <th>categoria</th>
+            <th>cnpj</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+<h1>Pedido</h1>
+
+<table id="tabela-pedido">
+    <thead>
+        <tr>
+            <th>numero_pedido</th>
+            <th>data_pedido</th>
+            <th>status_pedido</th>
+            <th>valor_total</th>
+            <th>endereco_entrega</th>
+            <th>status_entrega</th>
+            <th>data_prevista_entrega</th>
+            <th>data_realizada_entrega</th>
+            <th>cpf</th>
+            <th>codigo_carrinho</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+<h1>Lista</h1>
+
+<table id="tabela-lista">
+    <thead>
+        <tr>
+            <th>codigo_carrinho</th>
+            <th>codigo_barra</th>
+            <th>quantidade</th>
+            <th>preco_unitario</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+<h1>Pagamento</h1>
+
+<table id="tabela-pagamento">
+    <thead>
+        <tr>
+            <th>id_pagamento</th>
+            <th>tipo_pagamento</th>
+            <th>valor</th>
+            <th>status_pagamento</th>
+            <th>data_pagamento</th>
+            <th>nota_fiscal</th>
+            <th>numero_pedido</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+<h1>Receita</h1>
+
+<table id="tabela-receita">
+    <thead>
+        <tr>
+            <th>codigo_receita</th>
+            <th>nome</th>
+            <th>modo_preparo</th>
+            <th>tempo_preparo</th>
+            <th>porcoes</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+<h1>Refeição</h1>
+
+<table id="tabela-refeicao">
+    <thead>
+        <tr>
+            <th>codigo_receita</th>
+            <th>codigo_barra</th>
+            <th>quantidade</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+<script>
+
+const API_URL = "http://127.0.0.1:8000";
+
+
+async function carregarUsuario() {
+
+    const resposta = await fetch(`${API_URL}/usuario`);
+    const usuarios = await resposta.json();
+
+    const corpo = document.querySelector("#tabela-usuario tbody");
+
+    corpo.innerHTML = "";
+
+    for (let usuario of usuarios) {
+
+        corpo.insertAdjacentHTML("beforeend", `
+            <tr>
+                <td>${usuario.cpf}</td>
+                <td>${usuario.nome}</td>
+                <td>${usuario.email}</td>
+                <td>${usuario.telefone}</td>
+                <td>${usuario.endereco}</td>
+                <td>
+                    <button onclick="excluirUsuario('${usuario.cpf}')">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        `);
+    }
+}
+
+
+async function excluirUsuario(cpf) {
+
+    await fetch(`${API_URL}/usuario/${encodeURIComponent(cpf)}`, {
+        method: "DELETE"
+    });
+
+    carregarUsuario();
+    carregarCarrinho();
+    carregarPedido();
+    carregarLista();
+    carregarPagamento();
+}
+
+
+async function carregarCarrinho() {
+
+    const resposta = await fetch(`${API_URL}/carrinho`);
+    const carrinhos = await resposta.json();
+
+    const corpo = document.querySelector("#tabela-carrinho tbody");
+
+    corpo.innerHTML = "";
+
+    for (let carrinho of carrinhos) {
+
+        corpo.insertAdjacentHTML("beforeend", `
+            <tr>
+                <td>${carrinho.codigo_carrinho}</td>
+                <td>${carrinho.data_criacao}</td>
+                <td>${carrinho.status}</td>
+                <td>${carrinho.cpf}</td>
+                <td>
+                    <button onclick="excluirCarrinho('${carrinho.codigo_carrinho}')">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        `);
+    }
+}
+
+
+async function excluirCarrinho(codigo) {
+
+    await fetch(`${API_URL}/carrinho/${codigo}`, {
+        method: "DELETE"
+    });
+
+    carregarCarrinho();
+}
+
+
+async function carregarMercado() {
+
+    const resposta = await fetch(`${API_URL}/mercado`);
+    const mercados = await resposta.json();
+
+    const corpo = document.querySelector("#tabela-mercado tbody");
+
+    corpo.innerHTML = "";
+
+    for (let mercado of mercados) {
+
+        corpo.insertAdjacentHTML("beforeend", `
+            <tr>
+                <td>${mercado.cnpj}</td>
+                <td>${mercado.nome}</td>
+                <td>${mercado.endereco}</td>
+                <td>${mercado.contato}</td>
+                <td>
+                    <button onclick="excluirMercado('${mercado.cnpj}')">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        `);
+    }
+}
+
+
+async function excluirMercado(cnpj) {
+
+    await fetch(`${API_URL}/mercado/${cnpj}`, {
+        method: "DELETE"
+    });
+
+    carregarMercado();
+    carregarProduto();
+    carregarLista();
+    carregarRefeicao();
+}
+
+
+async function carregarProduto() {
+
+    const resposta = await fetch(`${API_URL}/produto`);
+    const produtos = await resposta.json();
+
+    const corpo = document.querySelector("#tabela-produto tbody");
+
+    corpo.innerHTML = "";
+
+    for (let produto of produtos) {
+
+        corpo.insertAdjacentHTML("beforeend", `
+            <tr>
+                <td>${produto.codigo_barra}</td>
+                <td>${produto.nome}</td>
+                <td>${produto.und_medida}</td>
+                <td>${produto.preco_und}</td>
+                <td>${produto.categoria}</td>
+                <td>${produto.cnpj}</td>
+                <td>
+                    <button onclick="excluirProduto('${produto.codigo_barra}')">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        `);
+    }
+}
+
+
+async function excluirProduto(codigo) {
+
+    await fetch(`${API_URL}/produto/${codigo}`, {
+        method: "DELETE"
+    });
+
+    carregarProduto();
+    carregarLista();
+    carregarRefeicao();
+}
+
+
+async function carregarPedido() {
+
+    const resposta = await fetch(`${API_URL}/pedido`);
+    const pedidos = await resposta.json();
+
+    const corpo = document.querySelector("#tabela-pedido tbody");
+
+    corpo.innerHTML = "";
+
+    for (let pedido of pedidos) {
+
+        corpo.insertAdjacentHTML("beforeend", `
+            <tr>
+                <td>${pedido.numero_pedido}</td>
+                <td>${pedido.data_pedido}</td>
+                <td>${pedido.status_pedido}</td>
+                <td>${pedido.valor_total}</td>
+                <td>${pedido.endereco_entrega}</td>
+                <td>${pedido.status_entrega}</td>
+                <td>${pedido.data_prevista_entrega}</td>
+                <td>${pedido.data_realizada_entrega}</td>
+                <td>${pedido.cpf}</td>
+                <td>${pedido.codigo_carrinho}</td>
+                <td>
+                    <button onclick="excluirPedido('${pedido.numero_pedido}')">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        `);
+    }
+}
+
+
+async function excluirPedido(numero) {
+
+    await fetch(`${API_URL}/pedido/${numero}`, {
+        method: "DELETE"
+    });
+
+    carregarPedido();
+    carregarPagamento();
+}
+
+
+async function carregarLista() {
+
+    const resposta = await fetch(`${API_URL}/lista`);
+    const listas = await resposta.json();
+
+    const corpo = document.querySelector("#tabela-lista tbody");
+
+    corpo.innerHTML = "";
+
+    for (let lista of listas) {
+
+        corpo.insertAdjacentHTML("beforeend", `
+            <tr>
+                <td>${lista.codigo_carrinho}</td>
+                <td>${lista.codigo_barra}</td>
+                <td>${lista.quantidade}</td>
+                <td>${lista.preco_unitario}</td>
+                <td>
+                    <button onclick="excluirLista('${lista.codigo_carrinho}', '${lista.codigo_barra}')">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        `);
+    }
+}
+
+
+async function excluirLista(carrinho, produto) {
+
+    await fetch(`${API_URL}/lista/${carrinho}/${produto}`, {
+        method: "DELETE"
+    });
+
+    carregarLista();
+}
+
+
+async function carregarPagamento() {
+
+    const resposta = await fetch(`${API_URL}/pagamento`);
+    const pagamentos = await resposta.json();
+
+    const corpo = document.querySelector("#tabela-pagamento tbody");
+
+    corpo.innerHTML = "";
+
+    for (let pagamento of pagamentos) {
+
+        corpo.insertAdjacentHTML("beforeend", `
+            <tr>
+                <td>${pagamento.id_pagamento}</td>
+                <td>${pagamento.tipo_pagamento}</td>
+                <td>${pagamento.valor}</td>
+                <td>${pagamento.status_pagamento}</td>
+                <td>${pagamento.data_pagamento}</td>
+                <td>${pagamento.nota_fiscal}</td>
+                <td>${pagamento.numero_pedido}</td>
+                <td>
+                    <button onclick="excluirPagamento('${pagamento.id_pagamento}')">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        `);
+    }
+}
+
+
+async function excluirPagamento(id) {
+
+    await fetch(`${API_URL}/pagamento/${id}`, {
+        method: "DELETE"
+    });
+
+    carregarPagamento();
+}
+
+
+async function carregarReceita() {
+
+    const resposta = await fetch(`${API_URL}/receita`);
+    const receitas = await resposta.json();
+
+    const corpo = document.querySelector("#tabela-receita tbody");
+
+    corpo.innerHTML = "";
+
+    for (let receita of receitas) {
+
+        corpo.insertAdjacentHTML("beforeend", `
+            <tr>
+                <td>${receita.codigo_receita}</td>
+                <td>${receita.nome}</td>
+                <td>${receita.modo_preparo}</td>
+                <td>${receita.tempo_preparo}</td>
+                <td>${receita.porcoes}</td>
+                <td>
+                    <button onclick="excluirReceita('${receita.codigo_receita}')">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        `);
+    }
+}
+
+
+async function excluirReceita(codigo) {
+
+    await fetch(`${API_URL}/receita/${codigo}`, {
+        method: "DELETE"
+    });
+
+    carregarReceita();
+    carregarRefeicao();
+}
+
+
+async function carregarRefeicao() {
+
+    const resposta = await fetch(`${API_URL}/refeicao`);
+    const refeicoes = await resposta.json();
+
+    const corpo = document.querySelector("#tabela-refeicao tbody");
+
+    corpo.innerHTML = "";
+
+    for (let refeicao of refeicoes) {
+
+        corpo.insertAdjacentHTML("beforeend", `
+            <tr>
+                <td>${refeicao.codigo_receita}</td>
+                <td>${refeicao.codigo_barra}</td>
+                <td>${refeicao.quantidade}</td>
+                <td>
+                    <button onclick="excluirRefeicao('${refeicao.codigo_receita}', '${refeicao.codigo_barra}')">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        `);
+    }
+}
+
+
+async function excluirRefeicao(receita, produto) {
+
+    await fetch(`${API_URL}/refeicao/${receita}/${produto}`, {
+        method: "DELETE"
+    });
+
+    carregarRefeicao();
+}
+
+
+carregarUsuario();
+carregarCarrinho();
+carregarMercado();
+carregarProduto();
+carregarPedido();
+carregarLista();
+carregarPagamento();
+carregarReceita();
+carregarRefeicao();
+
+</script>
+
+</body>
+</html>
+
+
